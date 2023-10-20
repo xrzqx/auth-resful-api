@@ -1,0 +1,41 @@
+### Register
+POST http://localhost:8080/api/users
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "razzaq",
+  "password": "rahasia",
+  "name": "Abdul Razzaq",
+  "email": "test@mail.com"
+}
+
+### Login
+POST http://localhost:8080/api/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "razzaq",
+  "password": "rahasia"
+}
+
+### Get User
+GET http://localhost:8080/api/users/current
+Accept: application/json
+X-API-TOKEN: ef4c20db-1ee3-47fe-ba95-8a98c4d3c6b5
+
+### Update User
+PATCH http://localhost:8080/api/users/current
+Accept: application/json
+Content-Type: application/json
+X-API-TOKEN: f5313053-53ef-4899-8f54-a16b9ae2de6d
+
+{
+  "name": "Abdul Razzaq Baru"
+}
+
+### Logout User
+DELETE http://localhost:8080/api/auth/logout
+Accept: application/json
+X-API-TOKEN: f5313053-53ef-4899-8f54-a16b9ae2de6d
