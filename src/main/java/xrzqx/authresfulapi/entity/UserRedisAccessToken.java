@@ -16,17 +16,17 @@ import org.springframework.data.redis.core.TimeToLive;
 @RedisHash(value = "users_access")
 public class UserRedisAccessToken {
 
-    //this will refer to refresh token
+    //this will refer to access token
     @Id
     private String id;
-
-    private String accessToken;
 
     private String username;
 
     private String name;
 
     private String email;
+
+    private long expireAt;
 
     @TimeToLive
     private long ttl;

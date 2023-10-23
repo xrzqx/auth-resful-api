@@ -1,5 +1,7 @@
 package xrzqx.authresfulapi.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,11 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TokenResponse {
+public class AccessTokenRequest {
 
-    private String accessToken;
-
-    private String refreshToken;
-
-    private Long expiredAt;
+    @Size(max = 40)
+    private String token;
 }

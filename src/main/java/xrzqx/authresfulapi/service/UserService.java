@@ -61,6 +61,7 @@ public class UserService {
         if (Objects.nonNull(request.getName())) {
             user.setName(request.getName());
             userRedisAccessToken.setName(user.getName());
+            userRedisAccessTokenRepository.save(userRedisAccessToken);
         }
         if (Objects.nonNull(request.getPassword())) {
             user.setPassword(BCrypt.hashpw(request.getPassword(), BCrypt.gensalt()));

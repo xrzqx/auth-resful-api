@@ -13,9 +13,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.server.ResponseStatusException;
 import xrzqx.authresfulapi.entity.User;
 import xrzqx.authresfulapi.entity.UserRedisAccessToken;
-import xrzqx.authresfulapi.entity.UserRedisRefreshToken;
 import xrzqx.authresfulapi.repository.UserRedisAccessTokenRepository;
-import xrzqx.authresfulapi.repository.UserRedisRefreshTokenRepository;
 import xrzqx.authresfulapi.repository.UserRepository;
 import xrzqx.authresfulapi.service.AuthService;
 
@@ -33,9 +31,6 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     private UserRedisAccessTokenRepository userRedisAccessTokenRepository;
 
     @Autowired
-    private UserRedisRefreshTokenRepository userRedisRefreshTokenRepository;
-
-    @Autowired
     private AuthService authService;
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -50,29 +45,8 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
         if (token == null){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }
-        UserRedisAccessToken userRedisAccessToken = new UserRedisAccessToken();
-        Optional<UserRedisAccessToken> optionalUserRedisAccessToken = userRedisAccessTokenRepository.findById(token);
-        if (optionalUserRedisAccessToken.isPresent()){
-            userRedisAccessToken = optionalUserRedisAccessToken.get();
-        }
-        else{
-            String acst = String.valueOf(userRedisRefreshTokenRepository.findFirstByAccessToken(token));
-            log.info("ACST {}",acst);
-            UserRedisRefreshToken userRedisRefreshToken = userRedisRefreshTokenRepository.findFirstByAccessToken(token)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized"));
-            log.info("USER_RR {}",userRedisRefreshToken);
-            User user = userRepository.findById(userRedisRefreshToken.getId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized"));
-            log.info("USER {}",user);
-            userRedisAccessToken.setId(userRedisRefreshToken.getRefreshToken());
-            userRedisAccessToken.setAccessToken(UUID.randomUUID().toString());
-            userRedisAccessToken.setTtl(60L);
-            userRedisAccessToken.setUsername(user.getUsername());
-            userRedisAccessToken.setName(user.getName());
-            userRedisAccessToken.setEmail(user.getEmail());
-            userRedisRefreshToken.setAccessToken(userRedisAccessToken.getAccessToken());
-            authService.setAccessToken(userRedisAccessToken, userRedisRefreshToken);
-        }
+        UserRedisAccessToken userRedisAccessToken = userRedisAccessTokenRepository.findById(token)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized"));
 
         return userRedisAccessToken;
     }

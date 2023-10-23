@@ -1,5 +1,6 @@
 package xrzqx.authresfulapi.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -24,5 +25,17 @@ public class User {
     private String name;
 
     private String email;
+
+    @Column(name = "refresh_token")
+    private String refreshToken;
+
+    @Column(name = "refresh_token_expired_at")
+    private Long refreshTokenExpiredAt;
+
+    @Column(name = "access_token")
+    private String accessToken;
+
+    @Column(name = "access_token_expired_at")
+    private Long accessTokenExpiredAt;
 
 }

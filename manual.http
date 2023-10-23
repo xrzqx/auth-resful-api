@@ -20,16 +20,25 @@ Content-Type: application/json
   "password": "rahasia"
 }
 
+### Token
+POST http://localhost:8080/api/auth/token
+Accept: application/json
+Content-Type: application/json
+
+{
+  "token": "037f8697-2f21-40d2-a7e4-e1c08c185524"
+}
+
 ### Get User
 GET http://localhost:8080/api/users/current
 Accept: application/json
-X-API-TOKEN: ef4c20db-1ee3-47fe-ba95-8a98c4d3c6b5
+X-API-TOKEN: 553ebf8d-2d20-4489-960b-9756995c9002
 
 ### Update User
 PATCH http://localhost:8080/api/users/current
 Accept: application/json
 Content-Type: application/json
-X-API-TOKEN: f5313053-53ef-4899-8f54-a16b9ae2de6d
+X-API-TOKEN: 5834aaaf-1e01-474a-a119-7326848714c1
 
 {
   "name": "Abdul Razzaq Baru"
@@ -38,4 +47,4 @@ X-API-TOKEN: f5313053-53ef-4899-8f54-a16b9ae2de6d
 ### Logout User
 DELETE http://localhost:8080/api/auth/logout
 Accept: application/json
-X-API-TOKEN: f5313053-53ef-4899-8f54-a16b9ae2de6d
+X-API-TOKEN: 553ebf8d-2d20-4489-960b-9756995c9002
